@@ -1,4 +1,4 @@
-﻿//#include "stdafx.h"      //for Visual Studio: "Project -> Properties" -> "Configuration Properties -> C/C++ -> Precompiled Headers" , then change the "Precompiled Header" setting to "Not Using Precompiled Headers" option.
+//#include "stdafx.h"      //for Visual Studio: "Project -> Properties" -> "Configuration Properties -> C/C++ -> Precompiled Headers" , then change the "Precompiled Header" setting to "Not Using Precompiled Headers" option.
 #include <string>
 #include <vector>
 #include <fstream>
@@ -307,6 +307,17 @@ int main()
 					wstring wsWord = Read(sDicFile);  int start_pos =0;
 					wstring wsRemoveTemp;
 
+					
+					wsRemoveTemp = L"\n"+ wsRemove+ L"\n";
+					if(( start_pos = wsWord.find(wsRemoveTemp, 0)) != string::npos)
+					{
+						wsWord.replace(start_pos, wsRemoveTemp.length()-1, L"");
+						myfile.open (sDicFile);
+						myfile << wstring_to_utf8(wsWord);
+						myfile.close();
+						goto es;
+					}
+
 					wsRemoveTemp = L"\n"+ wsRemove;
 					if(( start_pos = wsWord.find(wsRemoveTemp, 0)) != string::npos  && start_pos == wsWord.length()-wsRemoveTemp.length())
 					{
@@ -327,15 +338,6 @@ int main()
 						goto es;
 					}					
 					
-					wsRemoveTemp = L"\n"+ wsRemove+ L"\n";
-					if(( start_pos = wsWord.find(wsRemoveTemp, 0)) != string::npos)
-					{
-						wsWord.replace(start_pos, wsRemoveTemp.length()-1, L"");
-						myfile.open (sDicFile);
-						myfile << wstring_to_utf8(wsWord);
-						myfile.close();
-						goto es;
-					}
 				}
 			}
 			cout<<"Not found"<<endl;
