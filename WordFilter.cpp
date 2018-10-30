@@ -330,7 +330,7 @@ int main()
 					wsRemoveTemp = L"\n"+ wsRemove+ L"\n";
 					if(( start_pos = wsWord.find(wsRemoveTemp, 0)) != string::npos)
 					{
-						wsWord.replace(start_pos, wsRemoveTemp.length(), L"");
+						wsWord.replace(start_pos, wsRemoveTemp.length()-1, L"");
 						myfile.open (sDicFile);
 						myfile << wstring_to_utf8(wsWord);
 						myfile.close();
